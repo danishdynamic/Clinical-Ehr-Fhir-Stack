@@ -1,0 +1,29 @@
+# Python
+
+venv/
+__pycache__/
+*.pyc
+
+
+# Django
+db.sqlite3
+media/
+
+# Node
+node_modules/
+.next/
+
+# Environment
+.env
+/backend/.env
+
+# Python
+backend/venv/
+__pycache__/
+*.pyc
+
+
+# Node
+frontend/node_modules/
+frontend/.next/
+
