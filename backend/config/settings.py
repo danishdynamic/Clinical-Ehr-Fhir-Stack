@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-
+from datetime import timedelta
 import os
 from dotenv import load_dotenv
 
@@ -48,10 +48,11 @@ INSTALLED_APPS = [
 
     # local apps
     "apps.users",
-    'apps.patients',
-    'apps.fhir',
+    'apps.patients.apps.PatientsConfig',
+    'apps.fhir.apps.FhirConfig',
     'apps.openehr',
     'apps.audit_logs',
+    "apps.observations.apps.ObservationsConfig",
 
 ]
 
@@ -103,9 +104,7 @@ DATABASES = {
     }
 }
 
-# User model
 
-AUTH_USER_MODEL = "users.User"
 
 
 # Password validation
@@ -143,3 +142,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+
+# User model
+
+AUTH_USER_MODEL = "users.User"
+
