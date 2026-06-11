@@ -1,5 +1,13 @@
 from django.shortcuts import render
 
+from django.shortcuts import get_object_or_404
+
+from apps.observations.models import Observation
+
+from .observation_serializers import (
+    FHIRObservationSerializer,
+)
+
 # Create your views here.
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -22,3 +30,19 @@ class FHIRPatientView(APIView):
         data = FHIRPatientSerializer.to_fhir(patient)
 
         return Response(data)
+    
+
+class FHIRObservationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, observation_id):
+        observation = get_object_or_404(
+            Observation,
+            pk=observation_id,
+        )
+
+        data = FHIRObservationSerializer.to_fhir(
+            observation
+        )
+
+        return Response(data)  
