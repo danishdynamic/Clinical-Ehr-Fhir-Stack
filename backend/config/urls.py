@@ -25,4 +25,5 @@ urlpatterns = [
     path("api/fhir/", include("apps.fhir.urls")),
     path( "api/observations/", include("apps.observations.urls")),
     path("api/audit-logs/", include("apps.audit_logs.urls")),
+    path("api/compositions/", include("apps.compositions.urls")),
 ]

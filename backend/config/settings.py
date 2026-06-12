@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'apps.openehr',
     'apps.audit_logs.apps.AuditLogsConfig',
     "apps.observations.apps.ObservationsConfig",
+     "apps.compositions.apps.CompositionsConfig",
 
 ]
 

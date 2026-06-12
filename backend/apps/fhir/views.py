@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 
 from django.shortcuts import get_object_or_404
 
@@ -16,7 +16,7 @@ from rest_framework.views import APIView
 from apps.patients.models import Patient
 
 from .serializers import FHIRPatientSerializer
-from django.shortcuts import get_object_or_404
+from .bundle_serializers import FHIRBundleSerializer
 
 class FHIRPatientView(APIView):
     permission_classes = [IsAuthenticated]
@@ -46,3 +46,23 @@ class FHIRObservationView(APIView):
         )
 
         return Response(data)  
+    
+class FHIRPatientBundleView(APIView):
+
+    permission_classes = [
+        IsAuthenticated
+    ]
+
+    def get(self, request, patient_id):
+
+        patient = get_object_or_404(
+            Patient,
+            pk=patient_id,
+        )
+
+        bundle = (
+            FHIRBundleSerializer
+            .patient_bundle(patient)
+        )
+
+        return Response(bundle)
