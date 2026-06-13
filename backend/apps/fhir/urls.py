@@ -1,5 +1,7 @@
 from django.urls import path
 
+from backend.apps.fhir.async_views import AsyncFHIRExportView
+
 from .views import FHIRPatientBundleView, FHIRPatientView, FHIRObservationView
 
 urlpatterns = [
@@ -18,4 +20,8 @@ urlpatterns = [
         FHIRPatientBundleView.as_view(),
         name="fhir-patient-bundle",
     ),
+    path(
+    "export/patient/<int:patient_id>/",
+    AsyncFHIRExportView.as_view(),
+),
 ]
