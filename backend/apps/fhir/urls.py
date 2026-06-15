@@ -1,6 +1,6 @@
 from django.urls import path
 
-from backend.apps.fhir.async_views import AsyncFHIRExportView
+from .async_views import AsyncFHIRExportView
 
 from .views import FHIRPatientBundleView, FHIRPatientView, FHIRObservationView
 
