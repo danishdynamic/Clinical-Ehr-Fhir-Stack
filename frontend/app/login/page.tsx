@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -35,28 +38,35 @@ export default function LoginPage() {
     router.push("/dashboard");
   };
 
-  return (
-    <div className="p-10">
-      <h1>Clinical EHR Login</h1>
+ return (
+  <CardContent>
 
-      <input
-        placeholder="Username"
-        onChange={(e) =>
-          setUsername(e.target.value)
-        }
-      />
+  <div className="space-y-4">
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) =>
-          setPassword(e.target.value)
-        }
-      />
+    <Input
+      placeholder="Username"
+      onChange={(e) =>
+        setUsername(e.target.value)
+      }
+    />
 
-      <button onClick={handleLogin}>
-        Login
-      </button>
-    </div>
+    <Input
+      type="password"
+      placeholder="Password"
+      onChange={(e) =>
+        setPassword(e.target.value)
+      }
+    />
+
+    <Button
+      className="w-full"
+      onClick={handleLogin}
+    >
+      Login
+    </Button>
+
+  </div>
+
+</CardContent>
   );
 }
