@@ -1,11 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
+import { api } from "@/lib/api";
+
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,43 +38,52 @@ export default function LoginPage() {
       response.data.access
     );
 
-    localStorage.setItem(
-      "refresh",
-      response.data.refresh
-    );
-
     router.push("/dashboard");
   };
 
- return (
-  <CardContent>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50">
 
-  <div className="space-y-4">
+      <Card className="w-105">
 
-    <Input
-      placeholder="Username"
-      onChange={(e) =>
-        setUsername(e.target.value)
-      }
-    />
+        <CardHeader>
+          <CardTitle className="text-center text-2xl">
+            Clinical EHR Login
+          </CardTitle>
+        </CardHeader>
 
-    <Input
-      type="password"
-      placeholder="Password"
-      onChange={(e) =>
-        setPassword(e.target.value)
-      }
-    />
+        <CardContent>
 
-    <Button
-      className="w-full"
-      onClick={handleLogin}
-    >
-      Login
-    </Button>
+          <div className="space-y-4">
 
-  </div>
+            <Input
+              placeholder="Username"
+              onChange={(e) =>
+                setUsername(e.target.value)
+              }
+            />
 
-</CardContent>
+            <Input
+              type="password"
+              placeholder="Password"
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+            />
+
+            <Button
+              className="w-full"
+              onClick={handleLogin}
+            >
+              Login
+            </Button>
+
+          </div>
+
+        </CardContent>
+
+      </Card>
+
+    </div>
   );
 }
