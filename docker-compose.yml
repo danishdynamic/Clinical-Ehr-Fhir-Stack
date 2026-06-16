@@ -1,19 +1,42 @@
+version: "3.9"
+
 services:
+
   postgres:
-    image: postgres:17
+    image: postgres:16
 
-    container_name: clinical_ehr_postgres
-
-    restart: unless-stopped
-
-    env_file:
-      - .env
+    environment:
+      POSTGRES_DB: ehr_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
 
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5432:5432"
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../infra/docker/backend.Dockerfile
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../infra/docker/frontend.Dockerfile
+
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
