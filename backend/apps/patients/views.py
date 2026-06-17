@@ -16,7 +16,9 @@ class PatientViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        patient = serializer.save()
+        patient = serializer.save(
+            created_by=self.request.user
+        )
 
         create_audit_log(
             user=self.request.user,

@@ -15,7 +15,7 @@ export default function ObservationsPage() {
   return (
     <AppShell>
 
-      <h1>Observations</h1>
+      <h1 className="text-2xl font-bold mb-4">Observations</h1>
 
       {data?.map((obs: any) => (
 

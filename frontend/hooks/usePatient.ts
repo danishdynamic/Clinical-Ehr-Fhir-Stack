@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 
-export function usePatients() {
+export function usePatient(id: string) {
   return useQuery({
-    queryKey: ["patients"],
+    queryKey: ["patient", id],
 
     queryFn: async () => {
       const response =
         await api.get(
-          "/patients/"
+          `/patients/${id}/`
         );
 
       return response.data;

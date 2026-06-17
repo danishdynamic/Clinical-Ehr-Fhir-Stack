@@ -15,7 +15,7 @@ export default function AuditPage() {
   return (
     <AppShell>
 
-      <h1>Audit Logs</h1>
+      <h1 className="text-2xl font-bold mb-4">Audit Logs</h1>
 
       {data?.map((log: any) => (
 

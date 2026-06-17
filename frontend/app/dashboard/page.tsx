@@ -1,3 +1,5 @@
+"use client";
+
 import { AppShell }
 from "@/components/layout/AppShell";
 
@@ -8,7 +10,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import { useDashboard } from "@/hooks/useDashboard";
+
 export default function Dashboard() {
+  const { data: dashboardData, isLoading } = useDashboard();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <AppShell>
 
@@ -26,7 +36,7 @@ export default function Dashboard() {
           </CardHeader>
 
           <CardContent>
-            0
+            {dashboardData?.patients || 0}
           </CardContent>
         </Card>
 
@@ -38,7 +48,7 @@ export default function Dashboard() {
           </CardHeader>
 
           <CardContent>
-            0
+            {dashboardData?.observations || 0}
           </CardContent>
         </Card>
 
@@ -50,7 +60,7 @@ export default function Dashboard() {
           </CardHeader>
 
           <CardContent>
-            0
+            {dashboardData?.audit_logs || 0}
           </CardContent>
         </Card>
 

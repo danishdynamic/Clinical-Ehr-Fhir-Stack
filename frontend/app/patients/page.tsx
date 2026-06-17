@@ -11,10 +11,12 @@ import {
 import { usePatients } from "@/hooks/usePatients";
 import Link from "next/link";
 import { AppShell } from "@/components/layout/AppShell";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function PatientsPage() {
   const { data, isLoading } =
-    usePatients("");
+    usePatients();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -23,10 +25,23 @@ export default function PatientsPage() {
    return (
     <AppShell>
 
-      <h1 className="text-2xl font-bold mb-6">
+    <div className="flex items-center justify-between mb-6">
+
+      <h1 className="text-2xl font-bold">
         Patients
       </h1>
 
+      <Link href="/patients/new">
+        <Button className="bg-gray-500 text-white">
+          New Patient
+        </Button>
+      </Link>
+
+    </div>
+    
+    <Card>
+
+  <CardContent className="p-6">
       <Table>
 
         <TableHeader>
@@ -39,6 +54,10 @@ export default function PatientsPage() {
 
             <TableHead>
               Name
+            </TableHead>
+
+            <TableHead>
+            DOB
             </TableHead>
 
             <TableHead>
@@ -73,6 +92,10 @@ export default function PatientsPage() {
               </TableCell>
 
               <TableCell>
+              {patient.date_of_birth}
+              </TableCell>
+
+              <TableCell>
                 {patient.gender}
               </TableCell>
 
@@ -83,7 +106,11 @@ export default function PatientsPage() {
         </TableBody>
 
       </Table>
+     
 
+      </CardContent>
+
+</Card>
     </AppShell>
   );
 }

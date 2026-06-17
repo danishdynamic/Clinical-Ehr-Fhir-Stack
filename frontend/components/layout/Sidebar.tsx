@@ -7,6 +7,7 @@ import {
   FileText,
   Shield,
 } from "lucide-react";
+import { LogoutButton } from "../Logoutbutton";
 
 export function Sidebar() {
   return (
@@ -57,7 +58,7 @@ export function Sidebar() {
           <Shield size={18} />
           Audit Logs
         </Link>
-
+       <LogoutButton />
       </nav>
     </aside>
   );

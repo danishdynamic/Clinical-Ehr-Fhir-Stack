@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 
-export function usePatients() {
+export function useDashboard() {
   return useQuery({
-    queryKey: ["patients"],
+    queryKey: ["dashboard"],
 
     queryFn: async () => {
       const response =
         await api.get(
-          "/patients/"
+          "/auth/dashboard/stats/"
         );
 
       return response.data;
