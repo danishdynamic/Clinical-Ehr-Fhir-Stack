@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 from apps.patients.models import Patient
 
@@ -17,7 +18,7 @@ class Observation(models.Model):
 
     unit = models.CharField(max_length=20)
 
-    observed_at = models.DateTimeField()
+    observed_at = models.DateTimeField(default=timezone.now)
 
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,

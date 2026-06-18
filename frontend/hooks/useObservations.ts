@@ -3,17 +3,17 @@ import { useQuery } from
 
 import { api } from "@/lib/api";
 
-export function useObservations() {
+export function useObservations(patientId: string) {
 
   return useQuery({
 
-    queryKey: ["observations"],
+    queryKey: ["observations", patientId],
 
     queryFn: async () => {
 
       const response =
         await api.get(
-          "/observations/"
+          `/observations/?patient=${patientId}`
         );
 
       return response.data;

@@ -16,7 +16,9 @@ class ObservationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        observation = serializer.save()
+        observation = serializer.save(
+            created_by=self.request.user
+        )
 
         create_audit_log(
             user=self.request.user,
