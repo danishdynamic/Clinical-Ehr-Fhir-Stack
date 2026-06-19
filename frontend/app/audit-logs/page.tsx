@@ -19,11 +19,19 @@ export default function AuditPage() {
 
       {data?.map((log: any) => (
 
-        <div key={log.id}>
+        <div key={log.id} className="border p-3 mb-2 rounded">
 
-          {log.action}
-          {" - "}
-          {log.resource_type}
+          <p>
+            {log.action}
+          </p>
+
+          <p>
+            {log.resource_type}
+          </p>
+
+          <p>
+            {log.created_at}
+          </p>
 
         </div>
 

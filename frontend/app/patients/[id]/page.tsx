@@ -149,6 +149,13 @@ return (
           {obs.unit}
         </p>
 
+         <p className="text-sm text-gray-500">
+      Recorded:
+      {" "}
+      {new Date(
+        obs.observed_at
+      ).toLocaleString()}
+    </p>
       </div>
 
     )

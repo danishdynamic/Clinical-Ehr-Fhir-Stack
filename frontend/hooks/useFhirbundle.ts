@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 
-export function useAuditLogs() {
+export function useFhirBundle() {
   return useQuery({
-    queryKey: ["audit-logs"],
+    queryKey: ["fhir"],
 
     queryFn: async () => {
-      const response = await api.get(
-        "/audit-logs/"
-      );
+      const response =
+        await api.get(
+          "/fhir/bundle/"
+        );
 
       return response.data;
     },

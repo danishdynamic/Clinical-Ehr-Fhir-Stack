@@ -1,44 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { AppShell } from "@/components/layout/AppShell";
+import { useFhirBundle } from "@/hooks/useFhirbundle";
 
-import { api } from "@/lib/api";
-
-export default function FHIRPage() {
-
-  const [bundle, setBundle] =
-    useState<any>(null);
-
-  const loadBundle =
-    async () => {
-
-      const response =
-        await api.get(
-          "/fhir/patient/1/bundle/"
-        );
-
-      setBundle(
-        response.data
-      );
-    };
+export default function FhirPage() {
+  const { data } =
+    useFhirBundle();
 
   return (
-    <div>
+    <AppShell>
 
-      <button
-        onClick={loadBundle}
-      >
-        Load Bundle
-      </button>
+      <h1 className="text-2xl font-bold mb-6">
+        FHIR Bundle
+      </h1>
 
       <pre>
         {JSON.stringify(
-          bundle,
+          data,
           null,
           2
         )}
       </pre>
 
-    </div>
+    </AppShell>
   );
 }

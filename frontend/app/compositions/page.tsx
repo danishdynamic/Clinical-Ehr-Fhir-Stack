@@ -16,31 +16,27 @@ export default function CompositionsPage() {
   }
 
   return (
-    <AppShell>
-      <h1 className="text-2xl font-bold mb-4">
+   <AppShell>
+
+      <h1 className="text-2xl font-bold mb-6">
         Compositions
       </h1>
 
-      <div className="space-y-4">
-        {data?.map((composition: any) => (
-          <div
-            key={composition.id}
-            className="border rounded p-4"
-          >
-            <div>
-              Template:
-              {" "}
-              {composition.template_id}
-            </div>
+      {data?.map((c: any) => (
+        <div
+          key={c.id}
+          className="border p-4 rounded mb-3"
+        >
+          <h3>
+            {c.title}
+          </h3>
 
-            <div>
-              Archetype:
-              {" "}
-              {composition.archetype_id}
-            </div>
-          </div>
-        ))}
-      </div>
+          <p>
+            {c.content}
+          </p>
+        </div>
+      ))}
+
     </AppShell>
   );
 }
