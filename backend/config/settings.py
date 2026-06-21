@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # local apps
-    "apps.users",
+    "apps.users.apps.UsersConfig",
     'apps.patients.apps.PatientsConfig',
     'apps.fhir.apps.FhirConfig',
     'apps.openehr',

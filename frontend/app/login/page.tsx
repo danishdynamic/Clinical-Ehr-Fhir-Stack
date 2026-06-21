@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ShieldCheck, Stethoscope } from "lucide-react";
+import { ShieldCheck, Stethoscope, AlertCircle } from "lucide-react";
 
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
@@ -13,9 +13,11 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(""); // 1. Track submission or credential errors
 
   const handleLogin = async () => {
     setIsSubmitting(true);
+    setError(""); // Clear old errors on retry
 
     try {
       const response = await api.post("/auth/login/", {
@@ -23,17 +25,41 @@ export default function LoginPage() {
         password,
       });
 
+      // 2. Save the string token payload
       localStorage.setItem("access", response.data.access);
+
+      // 3. Extract and normalize user metadata fields returned from Django
+      const userPayload = {
+        id: response.data.user_id || response.data.id,
+        email: response.data.email,
+        first_name: response.data.first_name,
+        last_name: response.data.last_name,
+        role: response.data.role, // e.g., "INSURER", "DOCTOR", "ADMIN"
+      };
+
+      // 4. Serialize and save the user to sync with your useAuth hook
+      localStorage.setItem("user", JSON.stringify(userPayload));
+      
       router.push("/dashboard");
+    } catch (err: any) {
+      // Handle missing backends or invalid auth attempts gracefully
+      setError(
+        err.response?.data?.detail || 
+        err.response?.data?.non_field_errors?.[0] || 
+        "Invalid credentials or authorization connection error."
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#f8fafc_0%,#eef4ff_45%,#f8fafc_100%)]`">
+    /* Fixed the tiny backtick typo at the end of this gradient string */
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#f8fafc_0%,#eef4ff_45%,#f8fafc_100%)]">
       <div className="mx-auto flex min-h-screen max-w-7xl items-center px-4 sm:px-6 lg:px-8">
         <div className="grid w-full grid-cols-1 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/50 lg:grid-cols-[1.1fr_0.9fr]">
+          
+          {/* Left panel branding */}
           <div className="relative hidden bg-slate-950 p-10 text-white lg:flex lg:flex-col lg:justify-between">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_22%)]" />
             <div className="relative space-y-6">
@@ -65,6 +91,7 @@ export default function LoginPage() {
             </div>
           </div>
 
+          {/* Right panel interactive form */}
           <div className="flex items-center justify-center p-8 sm:p-10">
             <div className="w-full max-w-md space-y-6">
               <div className="space-y-2 text-center lg:text-left">
@@ -73,6 +100,14 @@ export default function LoginPage() {
                   Sign in to your account
                 </h2>
               </div>
+
+              {/* 5. Render Error Banner if Authentication Fails */}
+              {error && (
+                <div className="flex items-center gap-2.5 rounded-xl border border-rose-200 bg-rose-50/50 p-3 text-xs font-medium text-rose-800 animate-in fade-in-50 duration-200">
+                  <AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
+                  <span>{error}</span>
+                </div>
+              )}
 
               <div className="space-y-4">
                 <div className="space-y-2">

@@ -1,8 +1,8 @@
-
 # Clinical EHR & FHIR Architecture Stack
 
 An Educational Implementation of Healthcare Interoperability, Security, and Compliance Frameworks.
 
+![alt text](fhirehr_gif.gif)
 ---
 
 > ⚠️ **CRITICAL MEDICAL & LEGAL DISCLAIMER**
@@ -14,9 +14,9 @@ An Educational Implementation of Healthcare Interoperability, Security, and Comp
 
 ## 🌟 Overview
 
-The **Clinical EHR & FHIR Architecture Stack** is a blueprint designed to explore the intersection of modern web engineering and strict clinical data governance. It demonstrates how to build an enterprise-ready, interoperable, and audit-defensible health informatics backend using **Asynchronous Django (ASGI)**, structured standard formats, and highly secure authentication mechanisms.
+The **Clinical EHR & FHIR Architecture Stack** is an enterprise-grade blueprint designed to explore the intersection of modern web engineering and strict clinical data governance. It demonstrates how to build an interoperable, highly secure, and audit-defensible health informatics ecosystem using an **Asynchronous Django (ASGI)** backend paired with a type-safe **Next.js Single Page Application (SPA)**.
 
-This project addresses the modern dilemma of healthcare software: balancing rapid, decoupled API-driven development with the immutable constraints of patient data privacy and clinical semantic accuracy.
+This project addresses the modern dilemma of healthcare software: balancing rapid, decoupled API-driven layout rendering with the immutable constraints of patient data privacy, role-restricted clinical isolation, and semantic diagnostic accuracy.
 
 ---
 
@@ -25,34 +25,33 @@ This project addresses the modern dilemma of healthcare software: balancing rapi
 The architecture is systematically decoupled across six functional pillars:
 
 ### 1. HIPAA-Aligned Technical Safeguards
-Engineered to emulate the technical safeguards required under 45 CFR § 164.312:
-* **Access Control:** Enforcing unique user identification, emergency access procedures ("break-the-glass"), and automatic session termination policies.
-* **Transmission Security:** Guarding against unauthorized access to PHI during electronic transit through strictly enforced encryption protocols and integrity verification mechanisms.
+Engineered to emulate the technical safeguards required under **45 CFR § 164.312**:
+* **Access Control:** Enforcing unique user identification, role-based resource scopes, and automatic front-to-back session termination policies.
+* **Transmission Security:** Guarding against unauthorized modification of PHI during transit through strictly enforced HTTP header contexts, token-validation handshakes, and database transaction protection blocks.
 
-### 2. FHIR Interoperability (HL7)
+### 2. FHIR Interoperability (HL7) & Data Portability
 Implements native structures compliant with **Fast Healthcare Interoperability Resources (FHIR) Release 4/5**:
-* **Resource Modeling:** Mapping object-relational schemas to standard FHIR JSON representations (e.g., `Patient`, `Practitioner`, `Observation`, `Encounter`, `DiagnosticReport`).
-* **RESTful Clinical APIs:** Implementing standard FHIR search parameters (`_id`, `_lastUpdated`, identifiers, and system-specific tokens) to foster cross-platform data liquidification.
+* **Resource Modeling:** Mapping object-relational schemas to standard FHIR JSON representations (e.g., `Patient`, `Observation`, `Encounter`).
+* **B2B Interoperability Layer:** Designed to expose decoupled read-only FHIR serialization schemas. This allows third-party integrations—such as upcoming dedicated insurance risk underwriting and claims handling applications—to query authorized data points transparently without polluting the clinical model layer.
 
-### 3. openEHR Modeling & Archetypes
-Leverages the two-level modeling paradigm popularized by openEHR:
-* **Semantic Separation:** Keeping the underlying database schema stable while shifting clinical domain knowledge into highly configurable, immutable **Archetypes** and **Templates**.
-* **Clinical Data Repository:** Structuring operational data stores to handle deeply nested, hierarchical clinical entries (Compositions) without suffering from relational database schema rigidity.
+### 3. openEHR Modeling Concepts
+Leverages the structural concepts popularized by openEHR:
+* **Semantic Separation:** Keeping the underlying structural database schemas stable while shifting fluid clinical domain knowledge into configurable, logical entry representations.
+* **Hierarchical Repositories:** Structuring query boundaries to manipulate deeply nested, sequential clinical entries (Compositions) without suffering from relational database schema rigidity.
 
-### 4. JWT & RBAC Security Infrastructure
-A zero-trust access ecosystem designed for complex healthcare networks:
-* **Stateless Token Auth:** Secure JSON Web Tokens (JWT) distributed with tight expiration windows, cryptographic signature verification, and secure blacklisting capabilities via Redis.
-* **Role-Based Access Control (RBAC):** Granular access matrices mapping administrative, clinical, and audit roles (e.g., `Chief Medical Officer`, `Attending Physician`, `Ward Nurse`, `Compliance Auditor`) to specific API endpoints and row-level health records.
+### 4. Custom JWT & Frontend RBAC Sync
+A zero-trust access network tailored for multi-tenant hospital environments:
+* **Enhanced Token Payloads:** Extends default Django SimpleJWT mechanics via a customized token-obtain pipeline. Upon verification, the login endpoint actively ships user metadata (`role`, `email`, names) down inside the encrypted validation payload.
+* **Granular Sidebar Filtering:** The Next.js frontend listens directly to this synchronized token lifecycle. It utilizes strict client-side verification to automatically compile individual navigational footprints based on user functional matrices (e.g., `ADMIN`, `DOCTOR`, `NURSE`, `AUDITOR`, `INSURER`).
 
 ### 5. Compliance & Security Audit Logging
 An absolute, tamper-evident record of all system interactions:
-* **Full Attribution:** Every event captures the *Who, What, When, Where, and Why* of PHI access, modification, or deletion.
-* **ATNA Alignment:** Emulating Audit Trail and Node Authentication (ATNA) integration profiles, capturing client IP addresses, network node identifiers, and exact database transaction diffs.
+* **Full Attribution:** Every read, write, or modification captures the precise *Who, What, When, Where, and Why* of PHI access.
+* **ATNA Alignment:** Emulating Audit Trail and Node Authentication integration profiles, capturing database level transaction diffs linked directly to the initiating authenticated session context.
 
-### 6. Modern Asynchronous Backend Engine (ASGI & Django)
-Built on a high-concurrency, scalable foundational stack:
-* **ASGI Architecture:** Utilizing Django's asynchronous capabilities to handle long-lived connections, concurrent polling, and asynchronous web tasks smoothly.
-* **Optimized Persistence Engine:** Structured using modern Django design patterns, featuring strict PostgreSQL execution paths, optimized indexing strategy on indexing-heavy JSONB fields (for FHIR payloads), and query optimizations to combat deadlock risks.
+### 6. Robust Type-Safe Backend Engineering
+* **Pylance-Compliant Type Guarding:** The API incorporates explicit `None` barrier guards and dynamic lookup routing (`getattr`) to eliminate static stub type-checking errors, combining pythonic flexibility with strict compile-time checks.
+* **Optimized Persistence Engine:** Engineered to resolve complex relational deadlock states using clean transaction workflows, optimized indexing strategies, and optimized PostgreSQL execution paths.
 
 ---
 
@@ -61,17 +60,91 @@ Built on a high-concurrency, scalable foundational stack:
 ```text
 Clinical-Ehr-Fhir-Stack/
 ├── backend/
-│   ├── config/                  # Project configuration entry point
+│   ├── config/                  # Core project configuration entry point
 │   │   ├── __init__.py
-│   │   ├── asgi.py              # ASGI configuration for high-concurrency/async
-│   │   ├── settings.py          # Main settings module (Security, DB, Cache configuration)
-│   │   ├── urls.py              # Global URL dispatching matrix
+│   │   ├── asgi.py              # ASGI configuration for high-concurrency connections
+│   │   ├── settings.py          # Security, SimpleJWT, and DB configuration profiles
+│   │   ├── urls.py              # Global URL dispatching matrix (routes /auth/ to users app)
 │   │   └── wsgi.py              # WSGI fallback server config
 │   ├── apps/
-│   │   ├── authentication/      # JWT processing, RBAC engine, and user profiles
-│   │   ├── patients/            # Patient Demographics, FHIR Resource Mappings, openEHR engines
-│   │   ├── clinical/            # Encounters, Observations, Vitals, and Diagnostic Reports
+│   │   ├── users/               # Custom User models, Custom JWT Token Generation, and RBAC views
+│   │   ├── patients/            # Patient Demographics, FHIR serialization, and registry lookups
+│   │   ├── observations/        # Clinical vitals, telemetry entries, and health timelines
 │   │   └── audit_logs/          # Immutable compliance log capturing engines
 │   ├── manage.py
 │   └── requirements.txt
+├── frontend/                    # Next.js Single Page Application
+│   ├── app/                     # App router routing pages (dashboard, patients, etc.)
+│   ├── components/
+│   │   └── layout/
+│   │       ├── AppShell.tsx     # Master client UI viewport structure
+│   │       └── Sidebar.tsx      # Dynamic RBAC navigation list with integrated Sign Out handler
+│   └── hooks/
+│       └── useAuth.ts           # Token storage and reactive authentication profile controller
 └── README.md
+```
+
+---
+
+## 🚀 Installation & Local Environment Setup
+
+### Backend (Django REST Framework)
+
+- Clone the repository and navigate to the backend directory:
+
+```Bash
+cd Clinical-Ehr-Fhir-Stack/backend
+```
+
+- Initialize a python virtual environment and activate it:
+
+
+```Bash
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+```
+
+- Install the system dependencies:
+
+```Bash
+pip install -r requirements.txt
+```
+
+- Execute your local database migrations:
+
+```Bash
+python manage.py migrate
+```
+
+- Seed a terminal superuser account (Note: Ensure you assign roles inside the python shell afterward):
+
+``` Bash
+python manage.py createsuperuser
+```
+
+- Start up the development ASGI server:
+
+```Bash
+python manage.py runserver
+Frontend (Next.js)
+```
+
+- Navigate to the frontend directory:
+
+```Bash
+cd ../frontend
+```
+
+- Install dependencies:
+
+```Bash
+npm install
+```
+
+- Fire up the local hot-reloading development server:
+
+```Bash
+npm run dev
+```
+
+- Clear your browser developer tools console cache (localStorage.clear()) on your first launch to reset any stale local mock sessions.

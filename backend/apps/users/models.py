@@ -9,6 +9,7 @@ class UserRole(models.TextChoices):
     NURSE = "NURSE", "Nurse"
     PATIENT = "PATIENT", "Patient"
     AUDITOR = "AUDITOR", "Auditor"
+    INSURER = "INSURER", "Insurer"
 
 class User(AbstractUser):
     role = models.CharField(max_length=20, choices=UserRole.choices, default=UserRole.PATIENT)

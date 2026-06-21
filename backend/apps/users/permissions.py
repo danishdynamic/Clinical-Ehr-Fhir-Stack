@@ -34,3 +34,18 @@ class CanCreateObservation(BasePermission):
             return True
 
         return getattr(request.user, "role", None) in ["ADMIN", "DOCTOR", "NURSE"]
+
+
+class CanViewClinicalRecords(BasePermission):
+    """
+    Blocks Insurers and Patients from browsing global clinical records.
+    Only allows tracking for core clinical staff or system auditors.
+    """
+    def has_permission(self, request, view) -> bool:
+        if not request.user or not request.user.is_authenticated:
+            return False
+        if getattr(request.user, "is_superuser", False):
+            return True
+            
+        # INSURER is intentionally left out of this list
+        return getattr(request.user, "role", None) in ["ADMIN", "DOCTOR", "NURSE", "AUDITOR"]

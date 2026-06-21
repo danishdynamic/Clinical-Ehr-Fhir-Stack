@@ -24,11 +24,23 @@ export default function Home() {
                 observations, and care coordination.
               </p>
 
+              {/* ACTION CALL TO ACTION (CTA) REGION */}
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link href="/login">
-                  <Button size="lg" className="h-11 rounded-xl px-6 text-base">
+                <Link href="/login" className="w-full sm:w-auto">
+                  <Button size="lg" className="h-11 w-full rounded-xl px-6 text-base">
                     Login
                     <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+                
+                {/* Secondary Signup Option Route Link */}
+                <Link href="/signup" className="w-full sm:w-auto">
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="h-11 w-full rounded-xl px-6 text-base border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+                  >
+                    Register Account
                   </Button>
                 </Link>
               </div>

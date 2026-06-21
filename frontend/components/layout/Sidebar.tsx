@@ -1,90 +1,83 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {
-  Activity,
-  FileText,
-  Home,
-  Shield,
-  Users,
-} from "lucide-react";
+import { useRouter } from "next/navigation"; // 1. Import router for routing after logout
+import { useAuth } from "@/hooks/useAuth";
+import { LogOut, LayoutDashboard, Users, Activity, FileText, ShieldAlert } from "lucide-react"; // Optional UI icons
 
-import { cn } from "@/lib/utils";
-import { LogoutButton } from "../Logoutbutton";
-
-const navItems = [
-  {
-    href: "/dashboard",
-    label: "Dashboard",
-    icon: Home,
-  },
-  {
-    href: "/patients",
-    label: "Patients",
-    icon: Users,
-  },
-  {
-    href: "/observations",
-    label: "Observations",
-    icon: Activity,
-  },
-  {
-    href: "/compositions",
-    label: "Compositions",
-    icon: FileText,
-  },
-  {
-    href: "/audit-logs",
-    label: "Audit Logs",
-    icon: Shield,
-  },
+const allNavigation = [
+  { name: "Dashboard", href: "/dashboard", roles: ["ADMIN", "DOCTOR", "NURSE", "AUDITOR", "INSURER"] },
+  { name: "Patients", href: "/patients", roles: ["ADMIN", "DOCTOR", "NURSE", "INSURER"] },
+  { name: "Observations", href: "/observations", roles: ["ADMIN", "DOCTOR", "NURSE"] }, 
+  { name: "Compositions", href: "/compositions", roles: ["ADMIN", "DOCTOR", "NURSE"] }, // 2. Added Compositions link!
+  { name: "Audit Logs", href: "/audit-logs", roles: ["ADMIN", "AUDITOR"] },               
 ];
 
 export function Sidebar() {
-  const pathname = usePathname();
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const allowedNav = allNavigation.filter(item => {
+    const userRole = user?.role?.toUpperCase() || "";
+    
+    // Superuser admin bypass gets everything automatically
+    if (userRole === "ADMIN") return true;
+    
+    return item.roles.includes(userRole);
+  });
+
+  // 3. Clear auth data from client memory on logout execution
+  const handleLogout = () => {
+    localStorage.clear(); // Wipes access token and user role profile payload cleanly
+    router.push("/login"); // Redirects back to login gate
+  };
 
   return (
-    <aside className="hidden w-72 border-r border-slate-200 bg-white/80 p-6 backdrop-blur md:block">
-      <div className="mb-8 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white">
-          CE
+    <aside className="w-64 border-r border-slate-200 bg-slate-50 p-4 h-screen flex flex-col justify-between">
+      {/* Top Navigation Block */}
+      <div className="space-y-1">
+        <div className="px-3 py-2 mb-4">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Navigation</p>
         </div>
-        <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
-            Platform
+        
+        {allowedNav.length > 0 ? (
+          allowedNav.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200/60 hover:text-slate-900 transition"
+            >
+              {item.name}
+            </Link>
+          ))
+        ) : (
+          <p className="text-xs text-slate-400 p-3 italic">
+            No active roles mapped.
           </p>
-          <h2 className="text-lg font-semibold text-slate-900">
-            Clinical EHR
-          </h2>
-        </div>
+        )}
       </div>
 
-      <nav className="space-y-1.5">
-        {navItems.map(({ href, icon: Icon, label }) => {
-          const isActive = pathname === href;
-
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-                isActive
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-              )}
-            >
-              <Icon size={18} />
-              {label}
-            </Link>
-          );
-        })}
-
-        <div className="pt-4">
-          <LogoutButton />
+      {/* 4. Bottom Logout Button Anchor Block */}
+      <div className="border-t border-slate-200 pt-4">
+        <div className="px-3 py-1 mb-2">
+          <p className="text-[11px] font-medium text-slate-400 truncate">
+            Logged in as:{" "}
+            <span className="font-semibold text-slate-600">
+              {user?.first_name 
+                ? `${user.first_name} ${user.last_name}` 
+                : user?.email || "Staff"}
+            </span>
+          </p>
         </div>
-      </nav>
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-rose-600 hover:bg-rose-50/80 transition"
+        >
+          <LogOut className="h-4 w-4 shrink-0 text-rose-500" />
+          <span>Sign Out</span>
+        </button>
+      </div>
+
     </aside>
   );
 }
