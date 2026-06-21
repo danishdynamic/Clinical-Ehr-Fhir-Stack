@@ -1,84 +1,23 @@
 "use client";
 
-import Link from "next/link";
-
+import { ObservationDashboard } from "@/components/observations/ObservationDashboard";
 import { AppShell } from "@/components/layout/AppShell";
 
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
-
-import {
-  useObservations,
-} from "@/hooks/useObservations";
-
 export default function ObservationsPage() {
-  const {
-    data,
-    isLoading,
-  } = useObservations();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // Stable target lookup index anchor
+  const testPatientId = "1";
 
   return (
     <AppShell>
-
-      <h1 className="text-2xl font-bold mb-6">
-        Observations
-      </h1>
-
-      <div className="space-y-4">
-
-        {data?.map((obs: any) => (
-
-          <Card key={obs.id}>
-
-            <CardContent className="p-4">
-
-              <Link
-                href={`/patients/${obs.patient}`}
-                className="
-                  font-semibold
-                  text-lg
-                  hover:underline
-                "
-              >
-                {obs.patient_name}
-              </Link>
-
-              <p className="mt-2">
-                <strong>Observation:</strong>
-                {" "}
-                {obs.code}
-              </p>
-
-              <p>
-                <strong>Value:</strong>
-                {" "}
-                {obs.value}
-                {" "}
-                {obs.unit}
-              </p>
-
-              <p className="text-sm text-gray-500">
-                Recorded:
-                {" "}
-                {new Date(
-                  obs.observed_at
-                ).toLocaleString()}
-              </p>
-
-            </CardContent>
-
-          </Card>
-
-        ))}
-
+    <div className="space-y-6 p-6 max-w-7xl mx-auto">
+      <div>
+        <h1 className="text-xl font-bold text-zinc-950">Clinical Metrics Verification Engine</h1>
+        <p className="text-xs text-zinc-500">Observation Data Elements Registry</p>
       </div>
 
+      {/* Renders the internal metrics capturing dashboard grid directly */}
+      <ObservationDashboard patientId={testPatientId} />
+    </div>
     </AppShell>
   );
 }

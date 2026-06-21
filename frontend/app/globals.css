@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
@@ -7,4 +15,18 @@ body {
 
 body {
   margin: 0;
+  background: radial-gradient(circle at top, #f8fafc 0%, #eef2ff 100%);
+  color: #0f172a;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+::selection {
+  background: #cbd5e1;
+  color: #0f172a;
+}
+
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
 }

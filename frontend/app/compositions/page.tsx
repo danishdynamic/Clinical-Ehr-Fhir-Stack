@@ -1,42 +1,22 @@
 "use client";
 
+import { PatientCompositionsView } from "@/components/compositions/PatientCompositionsView";
 import { AppShell } from "@/components/layout/AppShell";
-import { useCompositions } from "@/hooks/useCompositions";
 
 export default function CompositionsPage() {
-  const { data, isLoading } =
-    useCompositions();
-
-  if (isLoading) {
-    return (
-      <AppShell>
-        <div>Loading...</div>
-      </AppShell>
-    );
-  }
+  // Safe test patient lookup ID
+  const testPatientId = "1";
 
   return (
-   <AppShell>
+    <AppShell>
+    <div className="space-y-6 p-6 max-w-7xl mx-auto">
+      <div>
+        <h1 className="text-xl font-bold text-zinc-950">EHR Document Management Architecture</h1>
+        <p className="text-xs text-zinc-500">Global Clinical Compositions Ledger</p>
+      </div>
 
-      <h1 className="text-2xl font-bold mb-6">
-        Compositions
-      </h1>
-
-      {data?.map((c: any) => (
-        <div
-          key={c.id}
-          className="border p-4 rounded mb-3"
-        >
-          <h3>
-            {c.title}
-          </h3>
-
-          <p>
-            {c.content}
-          </p>
-        </div>
-      ))}
-
+      <PatientCompositionsView patientId={testPatientId} />
+    </div>
     </AppShell>
   );
 }

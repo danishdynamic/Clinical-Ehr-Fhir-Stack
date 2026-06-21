@@ -51,9 +51,10 @@ INSTALLED_APPS = [
     'apps.patients.apps.PatientsConfig',
     'apps.fhir.apps.FhirConfig',
     'apps.openehr',
+    'apps.clinical_rules.apps.ClinicalRulesConfig',
     'apps.audit_logs.apps.AuditLogsConfig',
     "apps.observations.apps.ObservationsConfig",
-     "apps.compositions.apps.CompositionsConfig",
+    "apps.compositions.apps.CompositionsConfig",
 
 ]
 
