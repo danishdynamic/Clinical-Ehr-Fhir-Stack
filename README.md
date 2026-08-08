@@ -12,11 +12,14 @@ An Educational Implementation of Healthcare Interoperability, Security, and Comp
 [![Docker Compose](https://img.shields.io/badge/Docker_Compose-v2-2496ED?style=for-the-badge&logo=docker&logoColor=white)](docker-compose.yml)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
+---
+## Product Demo
+
 ![Demo gif](frontend/public/fhirehr_gif.gif)
 
 ---
 
-## ## ⚠️ CRITICAL MEDICAL & LEGAL DISCLAIMER
+## ⚠️ CRITICAL MEDICAL & LEGAL DISCLAIMER
 
 > This project is an educational implementation of Electronic Health Record (EHR) architectures, HL7 FHIR standards, openEHR modeling, and clinical security paradigms. While it incorporates technical safeguards aligned with HIPAA (Health Insurance Portability and Accountability Act) guidelines, this software is neither certified nor guaranteed to be HIPAA compliant.
 
@@ -45,7 +48,7 @@ This project addresses the modern dilemma of healthcare software: balancing rapi
 
 ---
 
-## ## 🗺️ High Level System Architecture
+## 🗺️ High Level System Architecture
 
 ```mermaid
 graph TD
@@ -76,45 +79,45 @@ graph TD
 ## 🏗️ Core Architectural Pillars
 The architecture is systematically decoupled across six functional pillars:
 
-1. HIPAA Aligned Technical Safeguards
+1. **HIPAA Aligned Technical Safeguards**
 Engineered to emulate the technical safeguards required under 45 CFR § 164.312:
 
-Access Control: Enforcing unique user identification, role based resource scopes, and automatic front to back session termination policies.
+- Access Control: Enforcing unique user identification, role based resource scopes, and automatic front to back session termination policies.
 
-Transmission Security: Guarding against unauthorized modification of PHI during transit through strictly enforced HTTP header contexts, token validation handshakes, and database transaction protection blocks.
+- Transmission Security: Guarding against unauthorized modification of PHI during transit through strictly enforced HTTP header contexts, token validation handshakes, and database transaction protection blocks.
 
-2. FHIR Interoperability (HL7) & Data Portability
+2. **FHIR Interoperability (HL7) & Data Portability**
 Implements native structures compliant with Fast Healthcare Interoperability Resources (FHIR) Release 4/5:
 
-Resource Modeling: Mapping object relational schemas to standard FHIR JSON representations (e.g., Patient, Observation, Encounter).
+- Resource Modeling: Mapping object relational schemas to standard FHIR JSON representations (e.g., Patient, Observation, Encounter).
 
-B2B Interoperability Layer: Exposes read only FHIR serialization schemas. This allows third party integrations such as dedicated insurance risk underwriting and claims handling applications to query authorized data points transparently without polluting the clinical model layer.
+- B2B Interoperability Layer: Exposes read only FHIR serialization schemas. This allows third party integrations such as dedicated insurance risk underwriting and claims handling applications to query authorized data points transparently without polluting the clinical model layer.
 
-3. openEHR Modeling Concepts
+3. **openEHR Modeling Concepts**
 Leverages the structural concepts popularized by openEHR:
 
-Semantic Separation: Keeping the underlying structural database schemas stable while shifting fluid clinical domain knowledge into configurable, logical entry representations.
+- Semantic Separation: Keeping the underlying structural database schemas stable while shifting fluid clinical domain knowledge into configurable, logical entry representations.
 
-Hierarchical Repositories: Structuring query boundaries to manipulate deeply nested, sequential clinical entries (Compositions) without suffering from relational database schema rigidity.
+- Hierarchical Repositories: Structuring query boundaries to manipulate deeply nested, sequential clinical entries (Compositions) without suffering from relational database schema rigidity.
 
-4. Custom JWT & Frontend RBAC Sync
+4. **Custom JWT & Frontend RBAC Sync**
 A zero trust access network tailored for multi tenant hospital environments:
 
-Enhanced Token Payloads: Extends default token mechanics via a customized token-obtain pipeline. Upon verification, the login endpoint actively ships user metadata (role, email, names) inside the encrypted validation payload.
+- Enhanced Token Payloads: Extends default token mechanics via a customized token-obtain pipeline. Upon verification, the login endpoint actively ships user metadata (role, email, names) inside the encrypted validation payload.
 
-Granular Sidebar Filtering: The Next.js frontend listens directly to this synchronized token lifecycle. It utilizes strict client side verification to automatically compile individual navigational footprints based on user functional matrices (e.g., ADMIN, DOCTOR, NURSE, AUDITOR, INSURER).
+- Granular Sidebar Filtering: The Next.js frontend listens directly to this synchronized token lifecycle. It utilizes strict client side verification to automatically compile individual navigational footprints based on user functional matrices (e.g., ADMIN, DOCTOR, NURSE, AUDITOR, INSURER).
 
-5. Compliance & Security Audit Logging
+5. **Compliance & Security Audit Logging**
 An absolute, tamper evident record of all system interactions:
 
-Full Attribution: Every read, write, or modification captures the precise Who, What, When, Where, and Why of PHI access.
+- Full Attribution: Every read, write, or modification captures the precise Who, What, When, Where, and Why of PHI access.
 
-ATNA Alignment: Emulating Audit Trail and Node Authentication integration profiles, capturing database level transaction diffs linked directly to the initiating authenticated session context.
+- ATNA Alignment: Emulating Audit Trail and Node Authentication integration profiles, capturing database level transaction diffs linked directly to the initiating authenticated session context.
 
-6. Robust Type Safe Engineering
+6. **Robust Type Safe Engineering**
 Type Guarding: Incorporates explicit None barrier guards and dynamic lookup routing to eliminate static stub type checking errors.
 
-Optimized Persistence Engine: Engineered to resolve complex relational deadlock states using clean transaction workflows, optimized indexing strategies, and optimized PostgreSQL execution paths.
+- Optimized Persistence Engine: Engineered to resolve complex relational deadlock states using clean transaction workflows, optimized indexing strategies, and optimized PostgreSQL execution paths.
 
 ---
 
@@ -210,4 +213,4 @@ For complete frontend state and component guides, see the Frontend README.
 
 ## 📜 License & Acknowledgments
 
-This project is released under the MIT License. Built for educational research into open standards including HL7 FHIR R4/R5, openEHR, and IHE ATNA profiles.
+This project is released under the [MIT License](https://mit-license.org/). Built for educational research into open standards including HL7 FHIR R4/R5, openEHR, and IHE ATNA profiles.
