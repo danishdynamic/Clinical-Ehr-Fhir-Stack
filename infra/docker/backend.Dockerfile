@@ -1,11 +1,24 @@
+# Use an official lightweight Python image
 FROM python:3.12-slim
 
-WORKDIR /app
+# Set environment variables to optimize Python execution inside Docker
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-COPY requirements.txt .
+# Set the working directory inside the container
+WORKDIR /code
 
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy only the requirements file first to leverage Docker cache
+COPY ./requirements.txt /code/requirements.txt
 
-COPY . .
+# Install dependencies without saving cache to keep image size small
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Copy the rest of the application code into the container
+COPY ./app /code/app
+
+# Expose port 8000 for network routing
+EXPOSE 8000
+
+# Run the FastAPI application using the built-in CLI command
+CMD ["fastapi", "run", "app/main.py", "--port", "8000"]
