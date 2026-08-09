@@ -2,11 +2,11 @@
 
 Containerized deployment, multi stage Docker builds, and orchestration definitions for the Clinical EHR & FHIR Architecture Stack. This setup provisions isolated runtime environments for the high concurrency API backend, Next.js SPA frontend, and PostgreSQL persistent database engine.
 
-[![Docker](https://img.shields.io/badge/Docker-24.0%2B-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
-[![Docker Compose](https://img.shields.io/badge/Docker_Compose-v2-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
-[![Python Image](https://img.shields.io/badge/Container-Python_3.12_Slim-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://hub.docker.com/_/python)
-[![Node Image](https://img.shields.io/badge/Container-Node_20_Alpine-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://hub.docker.com/_/node)
-[![PostgreSQL Container](https://img.shields.io/badge/Container-PostgreSQL_16_Alpine-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://hub.docker.com/_/postgres)
+[![Docker](https://img.shields.io/badge/Docker-24.0%2B-2496ED?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Docker Compose](https://img.shields.io/badge/Docker_Compose-v2-2496ED?style=flat&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![Python Image](https://img.shields.io/badge/Container-Python_3.12_Slim-3776AB?style=flat&logo=python&logoColor=white)](https://hub.docker.com/_/python)
+[![Node Image](https://img.shields.io/badge/Container-Node_20_Alpine-339933?style=flat&logo=nodedotjs&logoColor=white)](https://hub.docker.com/_/node)
+[![PostgreSQL Container](https://img.shields.io/badge/Container-PostgreSQL_16_Alpine-4169E1?style=flat&logo=postgresql&logoColor=white)](https://hub.docker.com/_/postgres)
 
 ---
 
@@ -29,13 +29,13 @@ graph TD
     Client([User / Client Browser]) -->|HTTP :3000| FrontendContainer[Next.js Frontend Container]
     Client -->|HTTP :8000| BackendContainer[FastAPI Backend Container]
 
-    subgraph Docker Bridge Network: ehr-network
+    subgraph network ["Docker Bridge Network: ehr-network"]
         FrontendContainer -->|Internal REST API Calls| BackendContainer
         BackendContainer -->|PostgreSQL Protocol :5432| DBContainer[(PostgreSQL Container)]
     end
 
-    subgraph Host Persistent Storage
-        DBContainer -->|Volume Mount| NamedVolume[([postgres_data Volume])]
+    subgraph host ["Host Persistent Storage"]
+        DBContainer -->|Volume Mount| NamedVolume([postgres_data Volume])
     end
 ```
 ---

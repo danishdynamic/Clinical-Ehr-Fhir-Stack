@@ -2,15 +2,14 @@
 
 An Educational Implementation of Healthcare Interoperability, Security, and Compliance Frameworks.
 
-
-[![Next.js](https://img.shields.io/badge/Next.js-14%2B-black?style=for-the-badge&logo=next.js&logoColor=white)](frontend/README.md)
-[![Python Engine](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](backend/README.md)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](backend/README.md)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](docker-compose.yml)
-[![HL7 FHIR](https://img.shields.io/badge/HL7_FHIR-R4%2FR5-orange?style=for-the-badge)](https://hl7.org/fhir/)
-[![openEHR](https://img.shields.io/badge/openEHR-Architecture-teal?style=for-the-badge)](https://www.openehr.org/)
-[![Docker Compose](https://img.shields.io/badge/Docker_Compose-v2-2496ED?style=for-the-badge&logo=docker&logoColor=white)](docker-compose.yml)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-14%2B-black?style=flat&logo=next.js&logoColor=white)](frontend/README.md)
+[![Python Engine](https://img.shields.io/badge/Python-3.12-3776AB?style=flat&logo=python&logoColor=white)](backend/README.md)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688?style=flat&logo=fastapi&logoColor=white)](backend/README.md)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql&logoColor=white)](docker-compose.yml)
+[![HL7 FHIR](https://img.shields.io/badge/HL7_FHIR-R4%2FR5-orange?style=flat)](https://hl7.org/fhir/)
+[![openEHR](https://img.shields.io/badge/openEHR-Architecture-teal?style=flat)](https://www.openehr.org/)
+[![Docker Compose](https://img.shields.io/badge/Docker_Compose-v2-2496ED?style=flat&logo=docker&logoColor=white)](docker-compose.yml)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=flat)](LICENSE)
 
 ---
 ## Product Demo
